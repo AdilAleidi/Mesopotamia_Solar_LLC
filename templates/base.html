@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mesopotamia Solar - {% block title %}{% endblock %}</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body class="{{ title|lower }}-page">
+    <header>
+      <div class="nav-container">
+        <div class="logo-container">
+          <a href="{{ url_for('home') }}" class="logo">
+            <img
+              src="{{ url_for('static', filename='images/logo.png') }}"
+              alt="Mesopotamia Solar Logo"
+            />
+          </a>
+        </div>
+
+        <button
+          class="menu-toggle"
+          aria-label="Menu"
+          aria-expanded="false"
+          aria-controls="main-nav"
+        >
+          <span class="hamburger">☰</span>
+        </button>
+
+        <nav class="main-nav">
+          <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="wrapper">
+      <main>{% block content %}{% endblock %}</main>
+
+      <footer>
+        <p>&copy; 2025 Mesopotamia Solar. All rights reserved.</p>
+        <div class="social-icons">
+          <a
+            href="https://www.facebook.com/profile.php?id=61574686001309"
+            target="_blank"
+            aria-label="Facebook"
+          >
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a
+            href="https://x.com/MesopotamiSolar"
+            target="_blank"
+            aria-label="Twitter"
+          >
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a
+            href="https://www.instagram.com/mesopotamiasolar/"
+            target="_blank"
+            aria-label="Instagram"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+      </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

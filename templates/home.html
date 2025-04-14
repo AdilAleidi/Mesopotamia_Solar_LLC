@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<div class="home-hero">
+  <h1 class="fade-in">Welcome to Mesopotamia Solar</h1>
+  <p class="fade-in delay-1">Powering a sustainable future with solar energy</p>
+  <a href="{{ url_for('contact') }}" class="cta-button fade-in delay-2">
+    Get in Touch
+  </a>
+</div>
+{% endblock %}
