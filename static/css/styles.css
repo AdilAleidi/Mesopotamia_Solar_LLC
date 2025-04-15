@@ -1,13 +1,21 @@
-/* ===== BASE STYLES ===== */
+/* ===== MODERN BASE STYLES ===== */
 :root {
   --primary-color: #058805;
+  --primary-dark: #046504;
   --secondary-color: #fdd835;
+  --secondary-dark: #e6c230;
   --text-light: #ffffff;
   --text-dark: #333333;
-  --overlay-dark: rgba(5, 81, 6, 0.7);
-  --overlay-light: rgba(255, 255, 255, 0.8);
+  --text-medium: #555555;
+  --overlay-dark: rgba(5, 81, 6, 0.85);
+  --overlay-light: rgba(255, 255, 255, 0.9);
+  --card-bg: rgba(255, 255, 255, 0.92);
   --header-height: 80px;
   --mobile-header-height: 70px;
+  --section-spacing: 80px;
+  --border-radius: 12px;
+  --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 * {
@@ -15,15 +23,20 @@
   padding: 0;
   box-sizing: border-box;
 }
-
-html,
-body {
-  height: 100%;
-  font-family: "Poppins", Arial, sans-serif;
-  line-height: 1.6;
+html {
+  font-size: 16px;
   scroll-behavior: smooth;
 }
 
+body {
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.7;
+  color: var(--text-dark);
+  background-color: #f9f9f9;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 /* ===== LAYOUT STRUCTURE ===== */
 .wrapper {
   display: flex;
@@ -32,24 +45,24 @@ body {
 }
 
 main {
-  padding: calc(var(--header-height) + 30px) 20px 20px;
+  padding: calc(var(--header-height) + 60px) 5% 60px;
   flex: 1;
 }
 
-/* ===== HEADER & NAVIGATION ===== */
+/* ===== ENHANCED HEADER & NAVIGATION ===== */
 header {
   position: fixed;
   top: 0;
   width: 100%;
   background-color: var(--overlay-dark);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
   height: var(--header-height);
   border-bottom: 2px solid var(--secondary-color);
-  display: flex;
-  justify-content: center;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
 }
-
 .nav-container {
   display: flex;
   justify-content: space-between;
@@ -102,7 +115,18 @@ header {
   position: relative;
   padding: 5px 0;
 }
-
+/* Add these styles to your existing CSS */
+.nav-links li {
+  position: relative;
+}
+.nav-links a.active {
+  color: var(--secondary-color);
+  font-weight: 700;
+}
+.nav-links a.active::after {
+  width: 100% !important; /* Force the underline to show */
+  background-color: var(--secondary-color);
+}
 .nav-links a:hover {
   color: var(--secondary-color);
 }
@@ -168,18 +192,22 @@ body.contact-page {
 /* ===== CONTENT SECTIONS ===== */
 .about-page main,
 .contact-wrapper {
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: 30px;
-  margin: 30px auto;
+  background-color: var(--overlay-light);
+  max-width: 800px; /* Increased from 600px for better content width */
+  padding: 50px 40px; /* Increased padding */
+  margin: 50px auto; /* Increased margin */
   border-radius: 14px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  max-width: 950px;
-  color: var(--text-light);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  color: var(--text-dark);
+  animation: slide-up 0.6s ease-out forwards;
+  backdrop-filter: blur(6px);
+  position: relative; /* Ensures proper stacking */
+  z-index: 1; /* Stays below header */
 }
 
 .about-page h2,
 .about-page h3 {
-  color: var(--secondary-color);
+  color: var(--text-dark);
   margin-bottom: 15px;
   font-weight: 700;
   text-transform: uppercase;
@@ -188,25 +216,46 @@ body.contact-page {
 .about-page p {
   margin-bottom: 20px;
 }
-
+.about-us {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.85
+  ); /* Lighter background for better contrast */
+  color: var(--text-light);
+  max-width: 800px;
+  margin: 20px 20px;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  animation: slide-up 0.6s ease-out forwards;
+  opacity: 0;
+}
 .home-hero,
-.about-us,
 .vision-mission,
 .services,
 .why-choose-us {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.85
+  ); /* Lighter background for better contrast */
   color: var(--text-light);
   max-width: 800px;
-  margin: 20px auto;
-  padding: 30px;
+  margin: 0 auto;
+  padding: 40px;
   border-radius: 10px;
   text-align: center;
-  animation: fadeIn 1s ease-out forwards;
+  animation: slide-up 0.6s ease-out forwards;
   opacity: 0;
 }
 
 .vision-block,
 .mission-block {
   background-color: rgba(255, 255, 255, 0.07);
+  color: #000;
   border-left: 5px solid var(--secondary-color);
   padding: 20px;
   margin: 25px 0;
@@ -214,24 +263,14 @@ body.contact-page {
 }
 
 .vision-block h3,
-.mission-block h3 {
-  color: var(--secondary-color);
+.mission-block h3,
+.whatweof {
+  color: var(--text-dark);
   margin-bottom: 10px;
 }
 
 .home-hero {
   background-color: rgba(0, 0, 0, 0.3);
-}
-
-.contact-wrapper {
-  background-color: var(--overlay-light);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  color: var(--text-dark);
-  max-width: 600px;
-  padding: 40px 30px;
-  border-radius: 15px;
-  backdrop-filter: blur(6px);
-  animation: slide-up 0.6s ease-out forwards;
 }
 
 .contact-wrapper h2 {
@@ -317,7 +356,7 @@ body.contact-page {
 /* ===== FOOTER ===== */
 footer {
   background-color: var(--overlay-dark);
-  color: var(--text-light);
+  color: #000;
   text-align: center;
   padding: 20px 0;
   border-top: 2px solid var(--secondary-color);
@@ -341,7 +380,7 @@ footer p {
   height: 40px;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  color: var(--text-light);
+  color: #000;
   font-size: 1.4rem;
   text-decoration: none;
   transition: background-color 0.3s, transform 0.3s, color 0.3s;
@@ -349,7 +388,7 @@ footer p {
 
 .social-icons a:hover {
   background-color: var(--secondary-color);
-  color: #000;
+  color: #ffffff;
   transform: scale(1.1);
 }
 
@@ -362,7 +401,14 @@ footer p {
 
   .logo-container {
     padding: 0 15px;
-    margin-right: auto;
+    margin-right: 10px;
+  }
+  .logo img {
+    max-height: 60%;
+    margin: 0 5px;
+  }
+  main {
+    padding: calc(var(--header-height) + 30px) 15px 30px;
   }
 
   .menu-toggle {
@@ -410,15 +456,20 @@ footer p {
     padding: 15px 20px;
     width: 100%;
   }
-
+  .nav-links a.active {
+    background-color: rgba(253, 216, 53, 0.1);
+    border-left: 3px solid var(--secondary-color);
+  }
+  .about-page main {
+    padding: 30px 20px;
+    margin: 30px 15px;
+  }
+  .about-us {
+    padding: 30px;
+  }
   .wrapper {
     padding-top: var(--header-height);
   }
-
-  main {
-    padding: 15px;
-  }
-
   .contact-wrapper {
     margin: 20px 15px;
     padding: 25px 20px;
@@ -438,7 +489,16 @@ footer p {
   :root {
     --header-height: 55px;
   }
-
+  main {
+    padding: calc(var(--header-height) + 20px) 10px 20px;
+  }
+  .about-page main {
+    padding: 25px 15px;
+    margin: 25px 10px;
+  }
+  .about-us {
+    padding: 25px;
+  }
   .logo-container {
     padding: 0 10px;
   }

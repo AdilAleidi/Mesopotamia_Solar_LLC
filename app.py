@@ -21,10 +21,10 @@ class ContactSubmission(db.Model):
 def home():
     return render_template('home.html', title="Home")
 
-
 @app.route('/about')
 def about():
     return render_template('about.html', title="About")
+
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -45,6 +45,3 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True, port=5001)
-
-
-

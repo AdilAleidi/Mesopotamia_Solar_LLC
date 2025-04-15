@@ -1,26 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const menuToggle = document.querySelector(".menu-toggle");
-  const mainNav = document.querySelector(".main-nav");
+  const navLinks = document.querySelectorAll(".nav-links a");
+  const currentPath = window.location.pathname;
 
-  // Only add toggle functionality if on mobile
-  function setupMobileMenu() {
-    if (window.innerWidth <= 768) {
-      menuToggle.style.display = "flex";
-      menuToggle.addEventListener("click", toggleMenu);
-    } else {
-      menuToggle.style.display = "none";
-      menuToggle.removeEventListener("click", toggleMenu);
-      mainNav.classList.remove("active");
+  navLinks.forEach((link) => {
+    const linkPath = link.pathname;
+
+    if (linkPath === currentPath) {
+      link.classList.add("active");
     }
-  }
-
-  function toggleMenu() {
-    const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
-    menuToggle.setAttribute("aria-expanded", !isExpanded);
-    mainNav.classList.toggle("active");
-  }
-
-  // Initialize and update on resize
-  setupMobileMenu();
-  window.addEventListener("resize", setupMobileMenu);
+  });
 });
