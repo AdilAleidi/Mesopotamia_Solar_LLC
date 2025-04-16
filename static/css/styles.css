@@ -14,7 +14,6 @@
   --mobile-header-height: 70px;
   --section-spacing: 80px;
   --border-radius: 12px;
-  --box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -23,6 +22,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -37,6 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 /* ===== LAYOUT STRUCTURE ===== */
 .wrapper {
   display: flex;
@@ -59,10 +60,11 @@ header {
   -webkit-backdrop-filter: blur(10px);
   z-index: 1000;
   height: var(--header-height);
-  border-bottom: 2px solid var(--secondary-color);
+  border-bottom: 1px solid var(--secondary-color);
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
   transition: var(--transition);
 }
+
 .nav-container {
   display: flex;
   justify-content: space-between;
@@ -83,19 +85,83 @@ header {
 }
 
 .logo img {
-  height: 50px;
+  height: 60px;
   width: auto;
   max-height: 80%;
   transition: transform 0.3s ease;
+  padding: 5px;
 }
 
 .logo img:hover {
   transform: scale(1.05);
 }
+/* Menu Toggle Button Styles */
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1003;
+  outline: none;
+}
 
+.hamburger {
+  display: block;
+  width: 30px;
+  height: 3px;
+  background-color: var(--text-light);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hamburger:before,
+.hamburger:after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  background-color: var(--text-light);
+  transition: all 0.3s ease;
+}
+
+.hamburger:before {
+  top: -8px;
+}
+
+.hamburger:after {
+  top: 8px;
+}
+
+.menu-toggle.active .hamburger {
+  background-color: transparent;
+}
+
+.menu-toggle.active .hamburger:before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.menu-toggle.active .hamburger:after {
+  transform: rotate(-45deg);
+  top: 0;
+}
+/* Main Navigation Styles */
 .main-nav {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  height: auto;
+  visibility: visible;
+  opacity: 1;
+  background-color: transparent; /* Remove background */
+  backdrop-filter: none; /* Remove blur */
+  -webkit-backdrop-filter: none;
   display: flex;
+  justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
 .nav-links {
@@ -115,18 +181,21 @@ header {
   position: relative;
   padding: 5px 0;
 }
-/* Add these styles to your existing CSS */
+
 .nav-links li {
   position: relative;
 }
+
 .nav-links a.active {
   color: var(--secondary-color);
   font-weight: 700;
 }
+
 .nav-links a.active::after {
-  width: 100% !important; /* Force the underline to show */
+  width: 100% !important;
   background-color: var(--secondary-color);
 }
+
 .nav-links a:hover {
   color: var(--secondary-color);
 }
@@ -146,28 +215,67 @@ header {
   width: 100%;
 }
 
-.menu-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--text-light);
-  font-size: 1.8rem;
-  cursor: pointer;
-  width: 48px;
-  height: 48px;
-  padding: 0;
-  z-index: 1001;
-}
-
-/* Focus styles for accessibility */
-.menu-toggle:focus {
-  outline: 2px solid var(--secondary-color);
-  outline-offset: 2px;
-}
-
 .nav-links a:focus {
   outline: 2px solid var(--secondary-color);
   outline-offset: 4px;
+}
+main {
+  padding: calc(var(--header-height) + 30px) 15px 30px;
+}
+.about-page main {
+  padding: 30px 20px;
+  margin: 30px 15px;
+}
+.about-us {
+  padding: 30px;
+}
+
+.contact-box {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.contact-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+footer {
+  padding: 15px;
+}
+
+.social-icons {
+  gap: 10px;
+  margin-top: 15px;
+}
+/* For all links in contact section */
+.contact-wrapper a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.contact-wrapper a:hover {
+  color: var(--secondary-dark);
+}
+
+.contact-wrapper a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--secondary-color);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.contact-wrapper a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 /* ===== PAGE BACKGROUNDS ===== */
@@ -190,24 +298,25 @@ body.contact-page {
 }
 
 /* ===== CONTENT SECTIONS ===== */
-.about-page main,
+.about-page main {
+  margin: 50px auto; /* Increased margin */
+  color: #ffffff;
+}
 .contact-wrapper {
-  background-color: var(--overlay-light);
+  background-color: rgba(0, 0, 0, 0.3);
   max-width: 800px; /* Increased from 600px for better content width */
   padding: 50px 40px; /* Increased padding */
   margin: 50px auto; /* Increased margin */
   border-radius: 14px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  color: var(--text-dark);
-  animation: slide-up 0.6s ease-out forwards;
+  color: var(--text-light);
   backdrop-filter: blur(6px);
   position: relative; /* Ensures proper stacking */
   z-index: 1; /* Stays below header */
 }
-
 .about-page h2,
 .about-page h3 {
-  color: var(--text-dark);
+  color: var(--text-light);
   margin-bottom: 15px;
   font-weight: 700;
   text-transform: uppercase;
@@ -217,12 +326,8 @@ body.contact-page {
   margin-bottom: 20px;
 }
 .about-us {
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.85
-  ); /* Lighter background for better contrast */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Lighter background for better contrast */
   color: var(--text-light);
   max-width: 800px;
   margin: 20px 20px;
@@ -254,8 +359,8 @@ body.contact-page {
 
 .vision-block,
 .mission-block {
-  background-color: rgba(255, 255, 255, 0.07);
-  color: #000;
+  background-color: rgba(0, 0, 0, 0.581);
+  color: #ffffff;
   border-left: 5px solid var(--secondary-color);
   padding: 20px;
   margin: 25px 0;
@@ -265,7 +370,7 @@ body.contact-page {
 .vision-block h3,
 .mission-block h3,
 .whatweof {
-  color: var(--text-dark);
+  color: var(--text-light);
   margin-bottom: 10px;
 }
 
@@ -276,9 +381,54 @@ body.contact-page {
 .contact-wrapper h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: var(--primary-color);
+  color: #ffffff;
+}
+/* Add this to your CSS */
+.email-support {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  padding: 15px 0;
 }
 
+.email-support p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.email-support a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block; /* Needed for the underline effect */
+}
+
+.email-support a:hover {
+  color: var(--secondary-dark);
+}
+
+/* Animated underline effect */
+.email-support a::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--secondary-color);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+
+.email-support a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
 /* ===== BUTTONS ===== */
 .cta-button {
   display: inline-block;
@@ -391,17 +541,112 @@ footer p {
   color: #ffffff;
   transform: scale(1.1);
 }
-
-/* ===== RESPONSIVENESS ===== */
 /* ===== RESPONSIVENESS ===== */
 @media (max-width: 768px) {
   :root {
     --header-height: var(--mobile-header-height);
   }
+  /* Mobile nav styles */
+  .main-nav {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    background-color: var(--overlay-dark);
+    height: 0;
+    overflow: hidden;
+    transition: height 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
+    visibility: hidden;
+    opacity: 0;
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+  }
 
+  .main-nav.active {
+    height: calc(100vh - var(--header-height));
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 20px 0;
+    gap: 15px;
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1) 0.1s;
+  }
+
+  .main-nav.active .nav-links li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+  }
   .logo-container {
-    padding: 0 15px;
-    margin-right: 10px;
+    margin: 10px 0; /* Adds top and bottom margin */
+  }
+
+  /* Hamburger icon styles */
+  .hamburger {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: var(--text-light);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .hamburger:before,
+  .hamburger:after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 3px;
+    background-color: var(--text-light);
+    transition: all 0.3s ease;
+  }
+
+  .hamburger:before {
+    top: -8px;
+  }
+
+  .hamburger:after {
+    top: 8px;
+  }
+
+  .menu-toggle.active .hamburger {
+    background-color: transparent;
+  }
+
+  .menu-toggle.active .hamburger:before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+
+  .menu-toggle.active .hamburger:after {
+    transform: rotate(-45deg);
+    top: 0;
+  }
+
+  .nav-links a.active {
+    background-color: rgba(253, 216, 53, 0.1);
+  }
+
+  /* Show mobile menu button */
+  .menu-toggle {
+    display: block;
   }
   .logo img {
     max-height: 60%;
@@ -410,78 +655,35 @@ footer p {
   main {
     padding: calc(var(--header-height) + 30px) 15px 30px;
   }
-
-  .menu-toggle {
+}
+@media (min-width: 769px) {
+  .nav-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+    justify-content: space-between;
+  }
+
+  .logo-container {
+    margin-right: auto;
   }
 
   .main-nav {
-    position: fixed;
-    top: var(--header-height);
-    left: 0;
-    right: 0;
-    background-color: rgba(3, 79, 2, 0.98);
-    height: 0;
-    overflow: hidden;
-    transition: height 0.4s ease-out;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 20px;
+    position: static;
+    height: auto;
     visibility: visible;
-  }
-
-  .main-nav.active {
-    height: calc(100vh - var(--header-height));
+    opacity: 1;
+    background: transparent;
+    display: flex;
+    align-items: center;
   }
 
   .nav-links {
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
+    flex-direction: row;
+    gap: 30px;
   }
 
-  .nav-links li {
-    width: 100%;
-    text-align: center;
-  }
-
-  .nav-links a {
-    display: block;
-    padding: 15px 20px;
-    width: 100%;
-  }
-  .nav-links a.active {
-    background-color: rgba(253, 216, 53, 0.1);
-    border-left: 3px solid var(--secondary-color);
-  }
-  .about-page main {
-    padding: 30px 20px;
-    margin: 30px 15px;
-  }
-  .about-us {
-    padding: 30px;
-  }
-  .wrapper {
-    padding-top: var(--header-height);
-  }
-  .contact-wrapper {
-    margin: 20px 15px;
-    padding: 25px 20px;
-  }
-
-  footer {
-    padding: 15px;
-  }
-
-  .social-icons {
-    gap: 10px;
-    margin-top: 15px;
+  .menu-toggle {
+    display: none; /* Hide hamburger on desktop */
   }
 }
 
@@ -500,20 +702,13 @@ footer p {
     padding: 25px;
   }
   .logo-container {
-    padding: 0 10px;
+    margin: 100px 100px; /* Adds top and bottom margin */
   }
 
   .logo img {
     max-height: 60%;
     margin: 0 5px;
   }
-
-  .menu-toggle {
-    width: 42px;
-    height: 42px;
-    font-size: 1.6rem;
-  }
-
   footer p {
     font-size: 0.85rem;
   }
@@ -524,9 +719,28 @@ footer p {
     font-size: 1rem;
   }
 }
+@media (max-width: 480px) {
+  :root {
+    --header-height: var(--mobile-header-height);
+  }
+  /* Keep nav elements spaced with logo always on the left */
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-/* Prevent scrolling when menu is open */
-body.menu-open {
-  overflow: hidden;
-  height: 100vh;
+  /* Force logo to align left */
+  .logo-container {
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+  }
+
+  /* Optional: Remove centering if applied elsewhere */
+  .logo-container,
+  .logo {
+    margin-left: 0 !important;
+    text-align: left !important;
+  }
 }
